@@ -4,7 +4,9 @@ var format = require('string-format');
 var request  = require('request');
 var _ = require('lodash');
 
-var conf = {};
+var conf = {
+    port: 8081
+};
 require('rc')('vvslack', conf);
 
 console.log('config', conf);
@@ -43,4 +45,4 @@ app.post('/', function (req, res) {
     res.sendStatus(200);
 });
 
-app.listen(conf.port ? conf.port : 8081);
+app.listen(conf.port);
