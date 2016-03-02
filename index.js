@@ -19,8 +19,8 @@ app.post('/', function (req, res) {
                 req.body.c_visitor_company_name :
                 '<{c_visitor_company_domain}|{c_visitor_company_name}>'.format(req.body),
             location: req.body.c_visitor_company_state ?
-                '{c_visitor_company_city}, {c_visitor_company_state}, {c_visitor_company_country}' :
-                '{c_visitor_company_city}, {c_visitor_company_country}'
+                '{c_visitor_company_city}, {c_visitor_company_state}, {c_visitor_company_country}'.format(req.body) :
+                '{c_visitor_company_city}, {c_visitor_company_country}'.format(req.body)
         }).value()
     );
 
@@ -28,7 +28,8 @@ app.post('/', function (req, res) {
         url: 'https://hooks.slack.com/services/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',
         body: {
             text: message
-        }
+        },
+        json: true
     });
 
     res.sendStatus(200);
