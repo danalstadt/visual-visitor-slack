@@ -7,7 +7,7 @@ var _ = require('lodash');
 var conf;
 require('rc')('vvslack', conf);
 
-console.log('config', rc);
+console.log('config', conf);
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
