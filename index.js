@@ -18,6 +18,10 @@ app.post('/', function (req, res) {
     _(req.body).mapValues(function (val) { return val.trim() }).value();
     console.log('request', req.body);
 
+    if (!req.body.c_visitor_company_domain.startsWith('http')) {
+        req.body.c_visitor_company_domain = 'http://' + req.body.c_visitor_company_domain;
+    }
+
     var message = format(
         'Someone from {company_name} in {location}, ' +
         'has visited {c_visitor_current_page_request_count} {page_plural} on the site.',
