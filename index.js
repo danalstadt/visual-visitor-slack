@@ -8,6 +8,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', function (req, res) {
+    _(req.body).mapValues(function (val) { return val.trim() }).value();
     console.log(req.body);
 
     var message = format(
@@ -15,12 +16,14 @@ app.post('/', function (req, res) {
         'has visited {c_visitor_current_page_request_count} {page_plural} on the site.',
         _(req.body).assign({
             page_plural: parseInt(req.body.c_visitor_current_page_request_count) > 1 ? 'pages' : 'page',
-            company_name: req.body.c_visitor_company_domain == 'no domain name found' ?
+            company_name: req.body.c_visitor_company_domain.indexOf(' ') != -1 ?
                 req.body.c_visitor_company_name :
                 format('<{c_visitor_company_domain}|{c_visitor_company_name}>', req.body),
             location: req.body.c_visitor_company_state ?
                 format('{c_visitor_company_city}, {c_visitor_company_state}, {c_visitor_company_country}', req.body) :
-                format('{c_visitor_company_city}, {c_visitor_company_country}', req.body)
+                req.body.c_visitor_company_city ?
+                    format('{c_visitor_company_city}, {c_visitor_company_country}', req.body) :
+                    format('{c_visitor_company_country}', req.body)
         }).value()
     );
 
