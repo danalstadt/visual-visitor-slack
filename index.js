@@ -17,10 +17,10 @@ app.post('/', function (req, res) {
             page_plural: parseInt(req.body.c_visitor_current_page_request_count) > 1 ? 'pages' : 'page',
             company_name: req.body.c_visitor_company_domain == 'no domain name found' ?
                 req.body.c_visitor_company_name :
-                '<{c_visitor_company_domain}|{c_visitor_company_name}>'.format(req.body),
+                format('<{c_visitor_company_domain}|{c_visitor_company_name}>', req.body),
             location: req.body.c_visitor_company_state ?
-                '{c_visitor_company_city}, {c_visitor_company_state}, {c_visitor_company_country}'.format(req.body) :
-                '{c_visitor_company_city}, {c_visitor_company_country}'.format(req.body)
+                format('{c_visitor_company_city}, {c_visitor_company_state}, {c_visitor_company_country}', req.body) :
+                format('{c_visitor_company_city}, {c_visitor_company_country}', req.body)
         }).value()
     );
 
