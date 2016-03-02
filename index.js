@@ -4,7 +4,7 @@ var format = require('string-format');
 var request  = require('request');
 var _ = require('lodash');
 
-var conf;
+var conf = {};
 require('rc')('vvslack', conf);
 
 console.log('config', conf);
