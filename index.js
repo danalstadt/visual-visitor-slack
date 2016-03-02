@@ -4,12 +4,17 @@ var format = require('string-format');
 var request  = require('request');
 var _ = require('lodash');
 
+var conf;
+require('rc')('vvslack', conf);
+
+console.log('config', rc);
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', function (req, res) {
     _(req.body).mapValues(function (val) { return val.trim() }).value();
-    console.log(req.body);
+    console.log('request', req.body);
 
     var message = format(
         'Someone from {company_name} in {location}, ' +
@@ -28,7 +33,7 @@ app.post('/', function (req, res) {
     );
 
     request.post({
-        url: 'https://hooks.slack.com/services/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',
+        url: conf.hook,
         body: {
             text: message
         },
@@ -38,4 +43,4 @@ app.post('/', function (req, res) {
     res.sendStatus(200);
 });
 
-app.listen(process.env.PORT ? process.env.PORT : 8081);
+app.listen(conf.port ? conf.port : 8081);
